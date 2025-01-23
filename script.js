@@ -102,21 +102,101 @@ function loadingAnimation() {
   );
 }
 function cursorAnimation() {
-  const crsr = document.querySelector("#crsr");
-  document.addEventListener("mousemove", function (e) {
+  // Shery.mouseFollower({
+  //   skew: true,
+  //   ease: "cubic-bezier(0.23, 1, 0.320, 1)",
+  //   duration: 1,
+  // });
+  window.addEventListener("mousemove", (e) => {
+    const crsr = document.querySelector("#crsr");
     crsr.style.left = `${e.clientX}px`;
-    crsr.style.top = `${e.clientY}px`
+    crsr.style.top = `${e.clientY}px`;
   });
-
   Shery.makeMagnet("#nav-part2 h4");
+
+  var videoContainer = document.querySelector("#video-container");
+  var videoCursor = document.querySelector("#video-cursor");
+  var video = document.querySelector("#video-container video");
+
+  videoContainer.addEventListener("mouseenter", function () {
+    videoContainer.addEventListener("mousemove", (dets) => {
+      gsap.to("#crsr", {
+        opacity: 0,
+      });
+      gsap.to("#video-cursor", {
+        left: dets.x - 500,
+        top: dets.y - 310,
+      });
+    });
+  });
+  videoContainer.addEventListener("mouseleave", function () {
+    gsap.to("#crsr", {
+      opacity: 1,
+    });
+    gsap.to("#video-cursor", {
+      top: "-10%",
+      left: "80%",
+    });
+  });
+  flag = 0;
+  videoContainer.addEventListener("click", function () {
+    if (flag == 0) {
+      video.play();
+      video.style.opacity = 1;
+      videoCursor.innerHTML = "<i class='ri-pause-fill'></i>";
+      gsap.to("#video-cursor", {
+        scale: 0.5,
+      });
+      flag = 1;
+    } else {
+      video.pause();
+      video.style.opacity = 0;
+      videoCursor.innerHTML = "<i class='ri-play-fill'></i>";
+      gsap.to("#video-cursor", {
+        scale: 1,
+      });
+      flag = 0;
+    }
+  });
 }
 function sheryAnimation() {
-  Shery.imageEffect(".image-div",{
-    style:5,
-    config:{"a":{"value":2,"range":[0,30]},"b":{"value":0.75,"range":[-1,1]},"zindex":{"value":-9996999,"range":[-9999999,9999999]},"aspect":{"value":0.7272749932567818},"ignoreShapeAspect":{"value":true},"shapePosition":{"value":{"x":0,"y":0}},"shapeScale":{"value":{"x":0.5,"y":0.5}},"shapeEdgeSoftness":{"value":0,"range":[0,0.5]},"shapeRadius":{"value":0,"range":[0,2]},"currentScroll":{"value":0},"scrollLerp":{"value":0.07},"gooey":{"value":true},"infiniteGooey":{"value":false},"growSize":{"value":4,"range":[1,15]},"durationOut":{"value":1,"range":[0.1,5]},"durationIn":{"value":1.5,"range":[0.1,5]},"displaceAmount":{"value":0.5},"masker":{"value":true},"maskVal":{"value":1.31,"range":[1,5]},"scrollType":{"value":0},"geoVertex":{"range":[1,64],"value":1},"noEffectGooey":{"value":true},"onMouse":{"value":0},"noise_speed":{"value":0.69,"range":[0,10]},"metaball":{"value":0.43,"range":[0,2]},"discard_threshold":{"value":0.5,"range":[0,1]},"antialias_threshold":{"value":0,"range":[0,0.1]},"noise_height":{"value":0.4,"range":[0,2]},"noise_scale":{"value":7.63,"range":[0,100]}},
-    gooey:true
-  })
+  Shery.imageEffect(".image-div", {
+    style: 5,
+    config: {
+      a: { value: 2, range: [0, 30] },
+      b: { value: 0.75, range: [-1, 1] },
+      zindex: { value: -9996999, range: [-9999999, 9999999] },
+      aspect: { value: 0.7272749932567818 },
+      ignoreShapeAspect: { value: true },
+      shapePosition: { value: { x: 0, y: 0 } },
+      shapeScale: { value: { x: 0.5, y: 0.5 } },
+      shapeEdgeSoftness: { value: 0, range: [0, 0.5] },
+      shapeRadius: { value: 0, range: [0, 2] },
+      currentScroll: { value: 0 },
+      scrollLerp: { value: 0.07 },
+      gooey: { value: true },
+      infiniteGooey: { value: false },
+      growSize: { value: 4, range: [1, 15] },
+      durationOut: { value: 1, range: [0.1, 5] },
+      durationIn: { value: 1.5, range: [0.1, 5] },
+      displaceAmount: { value: 0.5 },
+      masker: { value: true },
+      maskVal: { value: 1.31, range: [1, 5] },
+      scrollType: { value: 0 },
+      geoVertex: { range: [1, 64], value: 1 },
+      noEffectGooey: { value: true },
+      onMouse: { value: 0 },
+      noise_speed: { value: 0.69, range: [0, 10] },
+      metaball: { value: 0.43, range: [0, 2] },
+      discard_threshold: { value: 0.5, range: [0, 1] },
+      antialias_threshold: { value: 0, range: [0, 0.1] },
+      noise_height: { value: 0.4, range: [0, 2] },
+      noise_scale: { value: 7.63, range: [0, 100] },
+    },
+    gooey: true,
+  });
 }
+
 loadingAnimation();
 cursorAnimation();
 locomotiveAnimation();
