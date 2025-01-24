@@ -56,7 +56,7 @@ function loadingAnimation() {
         } else {
           h5timer.innerHTML = grow;
         }
-      }, 33);
+      }, 27);
     },
   });
   tl.to(".line h2", {
@@ -66,7 +66,7 @@ function loadingAnimation() {
   tl.to("#loader", {
     opacity: 0,
     duration: 0.2,
-    delay: 0, // 4
+    delay: 2.6,
   });
   tl.from("#page1", {
     y: 1600,
@@ -102,11 +102,6 @@ function loadingAnimation() {
   );
 }
 function cursorAnimation() {
-  // Shery.mouseFollower({
-  //   skew: true,
-  //   ease: "cubic-bezier(0.23, 1, 0.320, 1)",
-  //   duration: 1,
-  // });
   window.addEventListener("mousemove", (e) => {
     const crsr = document.querySelector("#crsr");
     crsr.style.left = `${e.clientX}px`;
@@ -196,8 +191,67 @@ function sheryAnimation() {
     gooey: true,
   });
 }
+function flagAnimation(){
+  var flagAnime = document.querySelector("#hero3");
+  document.addEventListener("mousemove", function(dets){
+    gsap.to("#flag", {
+      left: dets.x,
+      top: dets.y,
+    });
+  })
+  flagAnime.addEventListener("mouseenter", function(){
+    gsap.to("#flag", {
+      opacity: 1,
+    });
+  })
+  flagAnime.addEventListener("mouseleave", function(){
+    gsap.to("#flag", {
+      opacity: 0,
+    });
+  })
+}
+function footerAnimation(){
+  var clutter = ""
+  var clutter2 = ""
+  document.querySelector("#footer h1").textContent.split("").forEach(function (elem) {
+    clutter += `<span>${elem}</span>`
+  })
+  document.querySelector("#footer h1").innerHTML = clutter
+  document.querySelector("#footer h2").textContent.split("").forEach(function (elem) {
+    clutter2 += `<span>${elem}</span>`
+  })
+  document.querySelector("#footer h2").innerHTML = clutter2
 
+
+  document.querySelector("#footer-text").addEventListener("mouseenter", function () {
+    gsap.to("#footer h1 span", {
+      opacity: 0,
+      stagger: 0.05
+    })
+    gsap.to("#footer h2 span", {
+      delay: 0.35,
+      opacity: 1,
+      stagger: 0.1
+    })
+  })
+  document.querySelector("#footer-text").addEventListener("mouseleave", function () {
+    gsap.to("#footer h1 span", {
+      opacity: 1,
+      stagger: 0.1,
+      delay: 0.35,
+
+    })
+    gsap.to("#footer h2 span", {
+      opacity: 0,
+      stagger: 0.05
+    })
+  })
+}
 loadingAnimation();
 cursorAnimation();
 locomotiveAnimation();
 sheryAnimation();
+flagAnimation();
+footerAnimation();
+
+
